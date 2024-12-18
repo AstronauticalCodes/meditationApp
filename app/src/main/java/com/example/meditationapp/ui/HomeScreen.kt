@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.draw.clip
 import com.example.meditationapp.ui.theme.ButtonBlue
 import com.example.meditationapp.ui.theme.DarkerButtonBlue
+import com.example.meditationapp.ui.theme.LightRed
 import com.example.meditationapp.ui.theme.TextWhite
 
 
@@ -43,6 +45,7 @@ fun HomeScreen() {
             ChipsSection(
                 chips = listOf("Late Night", "Stress Free", "Insomnia", "Happy", "Sad")
             )
+            CurrentMeditation()
         }
     }
 }
@@ -109,6 +112,49 @@ fun ChipsSection(
                     color = TextWhite,
                 )
             }
+        }
+    }
+}
+
+
+@Composable
+fun CurrentMeditation(
+    color: Color = LightRed
+) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .padding(16.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(color)
+            .padding(horizontal = 16.dp, vertical = 20.dp)
+            .fillMaxWidth()
+    ) {
+        Column {
+            Text(
+                text = "Daily Thought",
+                style = MaterialTheme.typography.headlineLarge
+            )
+            Text(
+                text = "Meditation • 3-10 min",
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .padding(10.dp)
+                .background(ButtonBlue)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_play),
+                contentDescription = "Play",
+                tint = Color.White,
+                modifier = Modifier.size(16.dp)
+            )
         }
     }
 }
