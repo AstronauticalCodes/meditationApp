@@ -1,3 +1,5 @@
+package com.example.meditationapp.ui
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -44,7 +46,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.meditationapp.BottomMenuContext
 import com.example.meditationapp.standardQuadFromTo
+import com.example.meditationapp.ui.theme.AquaBlue
 import com.example.meditationapp.ui.theme.Beige1
 import com.example.meditationapp.ui.theme.Beige2
 import com.example.meditationapp.ui.theme.Beige3
@@ -84,7 +88,7 @@ fun HomeScreen() {
                     ),
                     Feature(
                         title = "Sleep meditation",
-                        R.drawable.ic_headphone,
+                        R.drawable.ic_videocam,
                         LightGreen1,
                         LightGreen2,
                         LightGreen3
@@ -106,6 +110,91 @@ fun HomeScreen() {
                 )
             )
         }
+        BottomMenu(
+            items = listOf(
+                BottomMenuContext("Home", R.drawable.ic_home),
+                BottomMenuContext("Meditate", R.drawable.ic_bubble),
+                BottomMenuContext("Sleep", R.drawable.ic_moon),
+                BottomMenuContext("Music", R.drawable.ic_music),
+                BottomMenuContext("Profile", R.drawable.ic_profile),
+            ),
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
+    }
+}
+
+
+@Composable
+fun BottomMenu(
+    items: List<BottomMenuContext>,
+    modifier: Modifier = Modifier,
+    activeHighlighColor: Color = ButtonBlue,
+    activeTextColor: Color = Color.White,
+    inactiveTextColor: Color = AquaBlue,
+    initialSelectedItemIndex: Int = 0,
+) {
+    var selectedItemIndex by remember {
+        mutableStateOf(initialSelectedItemIndex)
+    }
+    Row(
+        horizontalArrangement = Arrangement.SpaceAround,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .fillMaxWidth()
+            .background(DeepBlue)
+            .padding(16.dp)
+    ) {
+        items.forEachIndexed { index, item ->
+            BottomMenuItem(
+                item = item,
+                isSelected = index == selectedItemIndex,
+                activeHighlighColor = activeHighlighColor,
+                activeTextColor = activeTextColor,
+                inactiveTextColor = inactiveTextColor
+            ) {
+                selectedItemIndex = index
+            }
+        }
+    }
+}
+
+
+@Composable
+fun BottomMenuItem(
+    item: BottomMenuContext,
+    isSelected: Boolean = false,
+    activeHighlighColor: Color = ButtonBlue,
+    activeTextColor: Color = Color.White,
+    inactiveTextColor: Color = AquaBlue,
+    onItemClick: () -> Unit,
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .clickable {
+                onItemClick()
+            }
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .clip(RoundedCornerShape(12.dp))
+                .background(if (isSelected) activeHighlighColor else Color.Transparent)
+                .padding(12.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = item.iconId),
+                contentDescription = item.title,
+                tint = if (isSelected) activeTextColor else inactiveTextColor,
+                modifier = Modifier
+                    .size(20.dp)
+            )
+        }
+        Text(
+            text = item.title,
+            color = if (isSelected) activeTextColor else inactiveTextColor
+        )
     }
 }
 
