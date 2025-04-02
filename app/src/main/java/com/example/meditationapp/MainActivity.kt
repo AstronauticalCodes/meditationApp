@@ -24,5 +24,8 @@ class MainActivity: ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun show() {
-    HomeScreen()
+    Column() {
+        Text("Teaching Nitin Sharma in Hostel Park")
+        HomeScreen()
+    }
 }
