@@ -26,6 +26,9 @@ class MainActivity: ComponentActivity() {
 fun show() {
     Column() {
         Text("Teaching Nitin Sharma in Hostel Park")
+        Button(onClick = { /*TODO*/ }) {
+            Text(text = "Click Me")
+        }
         HomeScreen()
     }
 }
